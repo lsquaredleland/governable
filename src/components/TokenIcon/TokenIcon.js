@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -14,10 +13,11 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const TokenIcon = () => {
+const TokenIcon = ({ src }) => {
   const classes = useStyles()
+
   return (
-    <Box className={classes.tokenIcon}></Box>
+    <img className={classes.tokenIcon} src={src} />
   )
 }
 

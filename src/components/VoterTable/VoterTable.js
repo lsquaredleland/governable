@@ -11,8 +11,8 @@ const VoterTable = ({ side, percentage, color }) => {
   const { voters } = useContext(AppContext)
 
   const orderedVotes = voters
-    .filter(d => d.vote === side)
-    .sort((a, b) => b.amount - a.amount);
+    .filter(d => side === "For" ? d.support === true : d.support === false )
+    .sort((a, b) => b.votes - a.votes);
   const itemsToShow = 4;
 
     return (
@@ -31,15 +31,16 @@ const VoterTable = ({ side, percentage, color }) => {
         <AmountCell amount={"Votes"} />
         <DateCell time={"Time"} />
       </Row>
-      {orderedVotes.slice(0,itemsToShow).map((token, i) => {
+      {orderedVotes.slice(0,itemsToShow).map((voter, i) => {
+        const name = voter.display_name ? voter.display_name : voter.address.slice(0, 10)
         return (
-          <Row key={token.name}>
+          <Row key={voter.address}>
             <TokenCell
-              name={token.name}
-              tokenIcon={<TokenIcon />}
+              name={name}
+              tokenIcon={<TokenIcon src={voter.image_url}/>}
             />
-            <AmountCell amount={token.amount} />
-            <DateCell time={token.time} />
+            <AmountCell amount={voter.votes} />
+            <DateCell time={voter.time} />
           </Row>
         )
       })}
@@ -138,7 +139,7 @@ const TokenCell = ({ name, tokenIcon }) => {
   const classes = useTokenCellStyles()
   return (
     <Box className={classes.tokenCell}>
-      {/*tokenIcon*/}
+      {tokenIcon}
       <span className={classes.name}>{name}</span>
     </Box>
   )

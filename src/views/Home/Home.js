@@ -5,6 +5,7 @@ import { AppContext } from '../../App'
 import Grid from '@material-ui/core/Grid'
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from '@material-ui/core/styles'
+import Showdown from 'showdown'
 
 import Container from '../../components/Container'
 import Hero from '../../components/Hero'
@@ -21,11 +22,19 @@ const classes = makeStyles(theme => ({
 }));
 
 const Home = () => {
-  const { proTweets, negTweets } = useContext(AppContext)
+  const { tweets, proposals, currentProposal } = useContext(AppContext);
+  const proposal = proposals.find(p => p.id === currentProposal) || {};
+  const currentTweets = tweets.find(t => t.id === currentProposal) || {};
+
+  const calcPercentage = (input) => {
+    return (parseFloat(input) / (parseFloat(proposal.for_votes) + parseFloat(proposal.against_votes)) * 100).toFixed(2);
+  };
+
+  const converter = new Showdown.Converter();
 
   return (
     <>
-      <Hero />
+      <Hero proposal={proposal} />
       <Container>
         <div style={{
           marginTop: -68,
@@ -35,9 +44,9 @@ const Home = () => {
             <Grid item xs={3}>
               <VotesPanel
                 side={"For"}
-                percentage={90.31}
+                percentage={calcPercentage(proposal.for_votes)}
                 color={"#04D394"}
-                tweets={proTweets}
+                tweets={currentTweets.pro || []}
               />
             </Grid>
             <Grid item xs={6}>
@@ -57,10 +66,11 @@ const Home = () => {
                   >
                     <div style={{height:"400px", textAlign: "left"}}>
                       <h3 style={{padding:"1em 1em 0 1em"}}>Details</h3>
-                      <p style={{margin:"0 1em"}}>In a September 2019 vote, users were given an opportunity to select which assets they favored adding to Compound; Maker and Tether (USDT) led the poll.</p>
-                      <p style={{margin:"1em 1em"}}>This proposal adds Tether as a supported asset, with no collateral factor or reserve factor, and updates the Compound price feed to conservatively peg Tether to $1. By using a peg, weakness in the underlying asset won’t change collateral requirements for users borrowing Tether.</p>
-                      <p style={{margin:"1em 1em"}}>The initial interest rate model for Tether is a jump-rate model which ranges from 2% at 0% utilization, to 20% at 90% utilization, then jumps to 40% at 100% utilization.</p>
-                      <p style={{margin:"1em 1em"}}>cUSDT is an upgradable cToken contract that has been modified to accommodate potential transfer fees in the underlying token. The cToken contract has been reviewed by OpenZeppelin and the Compound team.</p>
+                      {proposal.description && proposal.description.split("\n\n").map(p => {
+                        return (
+                          <p style={{margin:"1em 1em"}} dangerouslySetInnerHTML={{__html:converter.makeHtml(p)}} />
+                        )
+                      })}
                     </div>
                   </Paper>
                 </Grid>
@@ -69,9 +79,9 @@ const Home = () => {
             <Grid item xs={3}>
               <VotesPanel
                 side={"Against"}
-                percentage={9.69}
+                percentage={calcPercentage(proposal.against_votes)}
                 color={"#DE5F67"}
-                tweets={negTweets}
+                tweets={currentTweets.neg || []}
               />
             </Grid>
           </Grid>

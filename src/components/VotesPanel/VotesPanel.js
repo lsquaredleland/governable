@@ -1,6 +1,4 @@
-import React, { useContext } from 'react'
-
-import { AppContext } from '../../App'
+import React from 'react'
 
 import Paper from "@material-ui/core/Paper";
 import { TwitterTweetEmbed } from 'react-twitter-embed';
@@ -21,7 +19,6 @@ const classes = {
 };
 
 const VotesPanel = ({ tweets, side, percentage, color }) => {
-  const { voters } = useContext(AppContext)
 
   return (
     <>

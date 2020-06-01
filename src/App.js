@@ -9,49 +9,83 @@ export const AppContext = React.createContext({})
 
 const App = () => {
 
-  const [proTweets, setProTweets] = useState([])
-  const [negTweets, setNegTweets] = useState([])
+  // Perhaps should move more useState to Home.js and only have global variables in Context...
+  const [tweets, setTweets] = useState([])
   const [voters, setVoters] = useState([])
-  const [proposal, setProposal] = useState({})
+  const [proposals, setProposals] = useState([])
+  const [currentProposal, setCurrentProposal] = useState(1)
+
+  // Is this right pattern to use?
+  const UpdateVoters = (id) => {
+    fetch(`https://api.compound.finance/api/v2/governance/proposal_vote_receipts?proposal_id=${id}&page_size=100`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setCurrentProposal(id)
+          const votes = result.proposal_vote_receipts.map(v => {
+            const { support, votes, voter: { address, display_name, image_url } } = v
+            return {
+              support,
+              address,
+              display_name,
+              image_url,
+              votes: parseFloat(votes),
+              time: "4/27 - 12:00"
+            }
+          });
+          setVoters(votes);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
+  const allTweets = [
+    {
+      id: 1,
+      pro: ['1254846366506905601', '1254899993443471360', '1256090650170327041'],
+      neg: ['1254669301308506113','1255235435447685120','1255181493279707136','1255609457519652864'],
+    }, {
+      id: 2,
+      pro: [],
+      neg: ['1255609457519652864'],
+      abstrain: ['1256313098723569664'],
+    }, {
+      id: 3,
+      pro: ['1260986319972429824'],
+      neg: [],
+    }, {
+      id: 4,
+      pro: [],
+      neg: [],
+    }
+  ];
 
   useEffect(() => {
-    setProTweets(['1254846366506905601', '1254899993443471360', '1256090650170327041'])
-    setNegTweets(['1254669301308506113','1255235435447685120','1255181493279707136','1255609457519652864'])
-    setProposal({number: 1, title: "Add USDT Support"})
-    const voters = [
-      { name: 'Zerion', amount: 25000, time: "4/27 - 12:00", vote: 'For' },
-      { name: '0xe6b2...Bcff', amount: 18080.73, time: "4/28 - 12:00", vote: 'Against' },
-      { name: 'Jacob', amount: 12500, time: "4/27 - 12:00", vote: 'Against' },
-      { name: 'Ric Burton', amount: 10000, time: "4/29 - 12:00", vote: 'Against' },
-      { name: 'Ryan Adams', amount: 10000, time: "4/27 - 12:00", vote: 'Against' },
-      { name: 'DeFi Rate', amount: 10000, time: "4/27 - 12:00", vote: 'Against' },
-      { name:'Polychain Capital', amount:325712.27, time: '4/28 - 13:15', vote: 'For' },
-      { name:'Geoffrey Hayes', amount:101000, time: '4/28 - 13:15', vote: 'For' },
-      { name:'ParaFi Capital', amount:100010, time: '4/28 - 13:15', vote: 'For' },
-      { name:'InstaDApp', amount:50000, time: '4/28 - 13:15', vote: 'For' },
-      { name:'Kyber Network', amount:25000, time: '4/28 - 13:15', vote: 'For' },
-      { name:'Gauntlet', amount:25000, time: '4/28 - 13:15', vote: 'For' },
-      { name:'1inch.Exchange', amount:25000, time: '4/28 - 13:15', vote: 'For' },
-      { name:'Calvin Liu', amount:24107.64, time: '4/28 - 13:15', vote: 'For' },
-      { name:'0xd681...7d6e', amount:24107.64, time: '4/28 - 13:15', vote: 'For' },
-      { name:'Blck', amount:22500, time: '4/28 - 13:15', vote: 'For' },
-      { name:'PoolTogether', amount:15000, time: '4/28 - 13:15', vote: 'For' },
-      { name:'Pantera Capital', amount:15000, time: '4/28 - 13:15', vote: 'For' },
-      { name:'Max Wolff', amount:13018.13, time: '4/28 - 13:15', vote: 'For' },
-      { name:'0xa0dc...C432', amount:13018.13, time: '4/28 - 13:15', vote: 'For' },
-      { name:'0x582c...D468', amount:9763.59, time: '4/28 - 13:15', vote: 'For' },
-      { name:'Dakeshi', amount:5000, time: '4/28 - 13:15', vote: 'For' },
-      { name:'New Form Capital', amount:4742.88, time: '4/28 - 13:15', vote: 'For' },
-    ]
-    setVoters(voters)
+    setTweets(allTweets)
+
+    fetch("https://api.compound.finance/api/v2/governance/proposals")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setProposals(result.proposals)
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      UpdateVoters(1)
   }, [])
 
   return (
     <AppContext.Provider value={{
-      proTweets,
-      negTweets,
-      proposal,
-      voters
+      tweets,
+      proposals,
+      currentProposal,
+      setCurrentProposal,
+      voters,
+      UpdateVoters
     }}>
       <div className="App">
         <Home />

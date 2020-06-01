@@ -3,6 +3,9 @@ import React, { useContext } from 'react'
 import { AppContext } from '../../App'
 
 import styled from 'styled-components'
+import IconButton from '@material-ui/core/IconButton'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 
 const StyledHero = styled.div`
@@ -31,8 +34,11 @@ const StyledWrapper = styled.div`
   position: relative;
 `
 
-const Hero = ({ tflValue }) => {
-  const { proposal: { number, title} } = useContext(AppContext)
+const Hero = ({ proposal }) => {
+  const { id, title } = proposal;
+
+  // Add navigation arrows here...
+  const { UpdateVoters, proposals } = useContext(AppContext);
 
   return (
     <StyledHero id="hero">
@@ -45,11 +51,24 @@ const Hero = ({ tflValue }) => {
                 fontSize: '2vmax',
                 fontWeight: 500,
                 textShadow: '0px 4px 4px black',
-              }}>
+              }} onClick={() => {
+                UpdateVoters(id+1) // Is this the right thing to do?
+              }} >
                 A House Divided
               </h2>
             </div>
-            <div style={{ textAlign: 'left' }}>
+            <div style={{ display: 'flex' }}>
+              {id > 1 ?
+                <IconButton style={{float: "left", height: "20px"}}>
+                  <ArrowBackIcon
+                    style={{
+                      color: '#FFF',
+                      fontSize: 24,
+                    }}
+                    onClick={() => id > 1 ? UpdateVoters(id-1) : null}
+                  />
+                </IconButton> : null
+              }
               <h2 style={{
                 margin: 0,
                 padding: 0,
@@ -58,8 +77,19 @@ const Hero = ({ tflValue }) => {
                 textShadow: '0px 4px 4px black',
                 display: 'flex',
               }}>
-                <div><a style={{color: "grey"}}>{('00' + number).slice(-3)}</a>  {title}</div>
+                <div><a style={{color: "grey"}}>{('00' + id).slice(-3)}</a>  {title}</div>
               </h2>
+              {id < proposals.length ?
+                <IconButton style={{float: "right", height: "20px"}}>
+                  <ArrowForwardIcon
+                    style={{
+                      color: '#FFF',
+                      fontSize: 24,
+                    }}
+                    onClick={() => id < proposals.length ? UpdateVoters(id+1) : null}
+                  />
+                </IconButton> : null
+              }
             </div>
         </StyledContent>
         <div style={{
