@@ -54,7 +54,6 @@ const Home = () => {
                 <Paper
                   className={classes.paper}
                   elevation={3}
-                  style={{background: "lightgrey"}}
                 >
                   <VotingBubbles />
                 </Paper>
@@ -62,13 +61,15 @@ const Home = () => {
                   <Paper
                     className={classes.paper}
                     elevation={3}
-                    style={{marginTop: "20px"}}
+                    style={{margin: "20px"}}
                   >
-                    <div style={{height:"400px", textAlign: "left"}}>
-                      <h3 style={{padding:"1em 1em 0 1em"}}>Details</h3>
+                    <div style={{height:"100%", textAlign: "left", padding: "1em"}}>
+                      <h3>Details</h3>
                       {proposal.description && proposal.description.split("\n\n").map(p => {
+                        // Hacky
+                        const html = converter.makeHtml(p).replace("<img","<img style='width:100%'");
                         return (
-                          <p style={{margin:"1em 1em"}} dangerouslySetInnerHTML={{__html:converter.makeHtml(p)}} />
+                          <p dangerouslySetInnerHTML={{__html:html}} />
                         )
                       })}
                     </div>

@@ -51,21 +51,21 @@ const Hero = ({ proposal }) => {
                 fontSize: '2vmax',
                 fontWeight: 500,
                 textShadow: '0px 4px 4px black',
-              }} onClick={() => {
-                UpdateVoters(id+1) // Is this the right thing to do?
               }} >
                 A House Divided
               </h2>
             </div>
             <div style={{ display: 'flex' }}>
               {id > 1 ?
-                <IconButton style={{float: "left", height: "20px"}}>
+                <IconButton
+                  style={{float: "left", height: "20px"}}
+                  onClick={() => id > 1 ? UpdateVoters(id-1) : null}
+                >
                   <ArrowBackIcon
                     style={{
                       color: '#FFF',
                       fontSize: 24,
                     }}
-                    onClick={() => id > 1 ? UpdateVoters(id-1) : null}
                   />
                 </IconButton> : null
               }
@@ -80,13 +80,15 @@ const Hero = ({ proposal }) => {
                 <div><a style={{color: "grey"}}>{('00' + id).slice(-3)}</a>  {title}</div>
               </h2>
               {id < proposals.length ?
-                <IconButton style={{float: "right", height: "20px"}}>
+                <IconButton
+                  style={{float: "right", height: "20px"}}
+                  onClick={() => id < proposals.length ? UpdateVoters(id+1) : null}
+                >
                   <ArrowForwardIcon
                     style={{
                       color: '#FFF',
                       fontSize: 24,
                     }}
-                    onClick={() => id < proposals.length ? UpdateVoters(id+1) : null}
                   />
                 </IconButton> : null
               }
