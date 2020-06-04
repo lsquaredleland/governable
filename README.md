@@ -13,3 +13,6 @@ ALSO it seems that over time there are less tweets from individual votes (or mor
 * Data from Compound's [GovernanceService API](https://compound.finance/docs/api#GovernanceService).
 * More rational behind [votes](https://compound.comradery.io/?channel=923) on specific proposals.
 * Lectura has a [3d multiple pyramid visualization](https://www.behance.net/gallery/14264353/Selling-at-Sundance) which could be interesting...
+
+
+* Look into custom tooltips for bubble to show more meaningful data...
