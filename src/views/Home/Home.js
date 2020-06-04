@@ -61,7 +61,7 @@ const Home = () => {
                   <Paper
                     className={classes.paper}
                     elevation={3}
-                    style={{margin: "20px"}}
+                    style={{marginTop: "20px"}}
                   >
                     <div style={{height:"100%", textAlign: "left", padding: "1em"}}>
                       <h3>Details</h3>

@@ -9,12 +9,12 @@ const VotingBubbles = () => {
 
   const root = {
     "address": "all votes",
-    "color": "hsl(186, 70%, 50%)",
+    "color": "#ffe0c7",
     "children": [
       {
         "address": "Pro",
         "color": "#04D394",
-        "children": voters.filter(v => v.support === true).map(v => ({...v, color:"#04D394"}))
+        "children": voters.filter(v => v.support === true).map(v => ({...v, color:"yellow"}))
       }, {
         "address": "Neg",
         "color": "#DE5F67",
@@ -32,13 +32,13 @@ const VotingBubbles = () => {
           margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
           identity="address"
           value="votes"
-          colors={{ scheme: 'nivo' }}
+          colors={(e) => e.color}
           padding={6}
           label={(e) => {
             const voter = voters.find(v => v.address === e.id)
             return voter ? voter['display_name'] : e.id.slice(0,5)
           }}
-          labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 0.8 ] ] }}
+          labelTextColor={'black'}
           borderWidth={2}
           borderColor={{ from: 'color' }}
           defs={[

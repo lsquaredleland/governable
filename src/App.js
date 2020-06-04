@@ -70,6 +70,7 @@ const App = () => {
       .then(
         (result) => {
           setProposals(result.proposals)
+          UpdateVoters(result.proposals.length)
         },
         (error) => {
           console.log(error);
