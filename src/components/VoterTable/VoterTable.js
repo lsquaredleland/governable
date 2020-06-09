@@ -8,12 +8,14 @@ import { makeStyles } from '@material-ui/core/styles'
 import TokenIcon from '../TokenIcon'
 
 const VoterTable = ({ side, percentage, color }) => {
-  const { voters } = useContext(AppContext)
+  const { voters, setModal } = useContext(AppContext)
 
   const orderedVotes = voters
     .filter(d => side === "For" ? d.support === true : d.support === false )
     .sort((a, b) => b.votes - a.votes);
   const itemsToShow = 4;
+
+  const showMore = e => setModal(side);
 
     return (
     <>
@@ -46,7 +48,10 @@ const VoterTable = ({ side, percentage, color }) => {
       })}
       {orderedVotes.length > itemsToShow ?
         <Row key={"Expand"}>
-          <Box style={{margin: "0 auto", fontWeight: 500}}>Show More</Box>
+          <Box
+            style={{margin: "0 auto", fontWeight: 500}}
+            onClick={showMore}
+          >Show More</Box>
         </Row>
       : ''}
     </>

@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { AppContext } from '../../App'
 
 import Grid from '@material-ui/core/Grid'
-import Paper from "@material-ui/core/Paper";
+import Paper from "@material-ui/core/Paper"
 import { makeStyles } from '@material-ui/core/styles'
 import Showdown from 'showdown'
 
@@ -11,6 +11,7 @@ import Container from '../../components/Container'
 import Hero from '../../components/Hero'
 import VotesPanel from '../../components/VotesPanel'
 import VotingBubbles from '../../components/VotingBubbles'
+import TableModal from '../../components/TableModal'
 
 
 const classes = makeStyles(theme => ({
@@ -35,6 +36,7 @@ const Home = () => {
   return (
     <>
       <Hero proposal={proposal} />
+      <TableModal />
       <Container>
         <div style={{
           marginTop: -68,

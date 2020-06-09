@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ReactGA from 'react-ga';
 
 import logo from './logo.svg';
 import './App.css';
@@ -14,6 +15,10 @@ const App = () => {
   const [voters, setVoters] = useState([])
   const [proposals, setProposals] = useState([])
   const [currentProposal, setCurrentProposal] = useState(1)
+  const [modal, setModal] = useState(undefined);
+
+  ReactGA.initialize('UA-169309883-1');
+  ReactGA.pageview(window.location.pathname + window.location.search);
 
   // Is this right pattern to use?
   const UpdateVoters = (id) => {
@@ -59,6 +64,10 @@ const App = () => {
       id: 4,
       pro: [],
       neg: [],
+    }, {
+      id: 7,
+      pro: ['1270905785149583360'],
+      neg: []
     }
   ];
 
@@ -79,6 +88,8 @@ const App = () => {
       UpdateVoters(1)
   }, [])
 
+  // Set up React Router: https://reacttraining.com/react-router/web/guides/quick-start
+
   return (
     <AppContext.Provider value={{
       tweets,
@@ -86,7 +97,8 @@ const App = () => {
       currentProposal,
       setCurrentProposal,
       voters,
-      UpdateVoters
+      UpdateVoters,
+      modal, setModal
     }}>
       <div className="App">
         <Home />
