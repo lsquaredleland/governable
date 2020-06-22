@@ -64,8 +64,8 @@ const TableModal = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
-                <Row row={row} />
+              {data.map((row, i) => (
+                <Row row={row} key={i} />
               ))}
             </TableBody>
           </Table>

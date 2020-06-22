@@ -1,15 +1,13 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React from 'react';
 
-import { AppContext } from '../../App'
-import { ResponsiveBubble } from '@nivo/circle-packing'
+import { AppContext } from '../../App';
+import { ResponsiveBubble } from '@nivo/circle-packing';
 
-import TokenIcon from '../TokenIcon'
+import TokenIcon from '../TokenIcon';
 
 
 // https://observablehq.com/@d3/clustered-bubbles
-const VotingBubbles = () => {
-  const { voters } = useContext(AppContext)
-
+const VotingBubbles = ({ voters }) => {
   const root = {
     "address": "All Votes",
     "color": "#ffe0c7",

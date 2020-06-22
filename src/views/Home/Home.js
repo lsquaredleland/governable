@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 
+import { useParams, useLocation } from "react-router-dom";
+
 import { AppContext } from '../../App'
 
 import Grid from '@material-ui/core/Grid'
@@ -23,7 +25,15 @@ const classes = makeStyles(theme => ({
 }));
 
 const Home = () => {
-  const { tweets, proposals, currentProposal } = useContext(AppContext);
+  const { tweets, proposals, setCurrentProposal, currentProposal, voters } = useContext(AppContext);
+
+  let { proposalNum } = useParams();
+  // OR use location -> what is the best way to do this...
+
+  // if (proposalNum !== currentProposal) {
+  //   setCurrentProposal(proposalNum)
+  // }
+
   const proposal = proposals.find(p => p.id === currentProposal) || {};
   const currentTweets = tweets.find(t => t.id === currentProposal) || {};
 
@@ -57,7 +67,7 @@ const Home = () => {
                   className={classes.paper}
                   elevation={3}
                 >
-                  <VotingBubbles />
+                  {voters.length > 0 ? <VotingBubbles voters={voters} /> : null}
                 </Paper>
                 <Grid item xs={7}>
                   <Paper
@@ -67,11 +77,11 @@ const Home = () => {
                   >
                     <div style={{height:"100%", textAlign: "left", padding: "1em"}}>
                       <h3>Details</h3>
-                      {proposal.description && proposal.description.split("\n\n").map(p => {
+                      {proposal.description && proposal.description.split("\n\n").map((p, i) => {
                         // Hacky
                         const html = converter.makeHtml(p).replace("<img","<img style='width:100%'");
                         return (
-                          <p dangerouslySetInnerHTML={{__html:html}} />
+                          <p dangerouslySetInnerHTML={{__html:html}} key={i} />
                         )
                       })}
                     </div>

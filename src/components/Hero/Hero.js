@@ -52,7 +52,7 @@ const Hero = ({ proposal }) => {
                 fontWeight: 500,
                 textShadow: '0px 4px 4px black',
               }} >
-                A House Divided
+                Compound Divided
               </h2>
             </div>
             <div style={{ display: 'flex' }}>

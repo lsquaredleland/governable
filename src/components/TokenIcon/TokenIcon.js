@@ -13,11 +13,11 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const TokenIcon = ({ src }) => {
+const TokenIcon = ({ src, alt }) => {
   const classes = useStyles()
 
   return (
-    <img className={classes.tokenIcon} src={src} />
+    <img className={classes.tokenIcon} src={src} alt={''} />
   )
 }
 

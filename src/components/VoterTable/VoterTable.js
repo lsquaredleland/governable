@@ -39,7 +39,7 @@ const VoterTable = ({ side, percentage, color }) => {
           <Row key={voter.address}>
             <TokenCell
               name={name}
-              tokenIcon={<TokenIcon src={voter.image_url}/>}
+              tokenIcon={<TokenIcon src={voter.image_url} alt={name} />}
             />
             <AmountCell amount={voter.votes} />
             <DateCell time={voter.time} />

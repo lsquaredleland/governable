@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import ReactGA from 'react-ga';
 
+import {
+ BrowserRouter as Router,
+ Switch,
+ Route,
+ Link,
+ Redirect,
+ useRouteMatch,
+ useParams,
+} from "react-router-dom";
+
 import logo from './logo.svg';
 import './App.css';
 
-import Home from './views/Home'
+import Home from './views/Home';
+import About from './views/About';
+import Header from './components/Header';
+import { allTweets } from './tweets';
 
-export const AppContext = React.createContext({})
+export const AppContext = React.createContext({});
 
 const App = () => {
 
@@ -20,8 +33,8 @@ const App = () => {
   ReactGA.initialize('UA-169309883-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
 
-  // Is this right pattern to use?
-  const UpdateVoters = (id) => {
+  // Gets individual voter data for each proposal
+  const UpdateVoters = id => {
     fetch(`https://api.compound.finance/api/v2/governance/proposal_vote_receipts?proposal_id=${id}&page_size=100`)
       .then(res => res.json())
       .then(
@@ -46,31 +59,6 @@ const App = () => {
       );
   }
 
-  const allTweets = [
-    {
-      id: 1,
-      pro: ['1254846366506905601', '1254899993443471360', '1256090650170327041'],
-      neg: ['1254669301308506113','1255235435447685120','1255181493279707136','1255609457519652864'],
-    }, {
-      id: 2,
-      pro: [],
-      neg: ['1255609457519652864'],
-      abstrain: ['1256313098723569664'],
-    }, {
-      id: 3,
-      pro: ['1260986319972429824'],
-      neg: [],
-    }, {
-      id: 4,
-      pro: [],
-      neg: [],
-    }, {
-      id: 7,
-      pro: ['1270905785149583360'],
-      neg: []
-    }
-  ];
-
   useEffect(() => {
     setTweets(allTweets)
 
@@ -78,33 +66,62 @@ const App = () => {
       .then(res => res.json())
       .then(
         (result) => {
-          setProposals(result.proposals)
-          UpdateVoters(result.proposals.length)
+          setProposals(result.proposals);
+          UpdateVoters(result.proposals.length);
         },
         (error) => {
           console.log(error);
         }
       );
-      UpdateVoters(1)
+      UpdateVoters(1);
   }, [])
 
-  // Set up React Router: https://reacttraining.com/react-router/web/guides/quick-start
+  return (
+    <>
+      <Router>
+        <Header />
+        <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/Compound" />
+          </Route>
+          <Route path="/Compound">
+            <AppContext.Provider value={{
+              tweets,
+              proposals,
+              currentProposal,
+              setCurrentProposal,
+              voters,
+              UpdateVoters,
+              modal, setModal
+            }}>
+              <div className="App">
+                <CompoundProposals currentProposal={currentProposal} />
+              </div>
+            </AppContext.Provider>
+          </Route>
+        </Switch>
+      </Router>
+    </>
+  );
+};
+
+const CompoundProposals = ({ currentProposal }) => {
+  let match = useRouteMatch();
 
   return (
-    <AppContext.Provider value={{
-      tweets,
-      proposals,
-      currentProposal,
-      setCurrentProposal,
-      voters,
-      UpdateVoters,
-      modal, setModal
-    }}>
-      <div className="App">
+    <Switch>
+      <Route path={`${match.path}/:proposalNum`}>
         <Home />
-      </div>
-    </AppContext.Provider>
+      </Route>
+      <Route exact path={match.path}>
+        <Home />
+        // <Redirect to={`/Compound/${currentProposal}`} />
+      </Route>
+    </Switch>
   );
-}
+};
 
 export default App;
