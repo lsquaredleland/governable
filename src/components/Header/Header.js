@@ -55,11 +55,21 @@ const Header = () => {
           <StyledLink to="/">
             <StyledLogo>
               <AccountBalanceIcon />
+              <AccountBalanceIcon style={{transform: 'rotate(180deg)'}}/>
               <div style={{ width: 4 }} />
               <span>A House Divided</span>
-              <div style={{ width: 4 }} />
-              <AccountBalanceIcon style={{transform: 'rotate(180deg)'}}/>
             </StyledLogo>
+            {/*<StyledLogo>
+              <div style={{display:"grid"}}>
+                <AccountBalanceIcon />
+                <AccountBalanceIcon style={{transform: 'rotate(180deg)'}} />
+              </div>
+              <div style={{ width: 4 }} />
+              <div style={{display:"grid"}}>
+                <span>A House</span>
+                <span>Divided</span>
+              </div>
+            </StyledLogo>*/}
           </StyledLink>
           <StyledNav>
             <StyledLink to="/Compound">Compound</StyledLink>
