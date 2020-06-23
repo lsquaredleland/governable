@@ -6,8 +6,9 @@ import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 
 import TokenIcon from '../TokenIcon'
+import { numFormat } from '../../utils';
 
-const VoterTable = ({ side, percentage, color }) => {
+const VoterTable = ({ side, percentage, voteCount, color }) => {
   const { voters, setModal } = useContext(AppContext)
 
   const orderedVotes = voters
@@ -23,6 +24,7 @@ const VoterTable = ({ side, percentage, color }) => {
         <ProgressBar
           side={side}
           percentage={percentage}
+          voteCount={voteCount}
           color={color}
         />
       </HeaderRow>
@@ -69,13 +71,14 @@ const useProgressBarStyles = makeStyles(theme => ({
     borderRadius: 5
   }
 }))
-const ProgressBar = ({ side, percentage, color }) => {
+const ProgressBar = ({ side, percentage, voteCount, color }) => {
   const classes = useProgressBarStyles()
+  const count = voteCount !== undefined ? numFormat(voteCount) : ''
   return (
     <Box className={classes.progressBar}>
       <div style={{width: "100%", height: "30px"}}>
         <h3 style={{float:"left"}}>{side}</h3>
-        <h3 style={{float:"right"}}>{percentage}%</h3>
+        <h3 style={{float:"right"}}>{percentage}% <span style={{fontWeight:'normal'}}>({count})</span></h3>
       </div>
       <div style={{position: "relative", marginTop: 20}}>
         <div className={classes.bar}
@@ -174,7 +177,7 @@ const AmountCell = ({ amount }) => {
   const classes = useAmountCellStyles()
   return (
     <Box className={classes.tflCell}>
-      {amount.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+      {numFormat(amount)}
     </Box>
   )
 }

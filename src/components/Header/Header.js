@@ -54,8 +54,8 @@ const Header = () => {
         <StyledHeader>
           <StyledLink to="/">
             <StyledLogo>
-              <AccountBalanceIcon />
-              <AccountBalanceIcon style={{transform: 'rotate(180deg)'}}/>
+              <AccountBalanceIcon style={{position: "relative", top:"-2px"}}/>
+              <AccountBalanceIcon style={{transform: 'rotate(180deg)', position: "relative", top:"2px"}}/>
               <div style={{ width: 4 }} />
               <span>A House Divided</span>
             </StyledLogo>

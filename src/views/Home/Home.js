@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { useParams, useLocation } from "react-router-dom";
 
@@ -28,11 +28,12 @@ const Home = () => {
   const { tweets, proposals, setCurrentProposal, currentProposal, voters } = useContext(AppContext);
 
   let { proposalNum } = useParams();
-  // OR use location -> what is the best way to do this...
 
-  // if (proposalNum !== currentProposal) {
-  //   setCurrentProposal(proposalNum)
-  // }
+  useEffect(() => {
+    if (Number.isInteger(parseInt(proposalNum)) && proposalNum != currentProposal) {
+      setCurrentProposal(parseInt(proposalNum));
+    }
+  }, [proposalNum])
 
   const proposal = proposals.find(p => p.id === currentProposal) || {};
   const currentTweets = tweets.find(t => t.id === currentProposal) || {};
@@ -57,11 +58,12 @@ const Home = () => {
               <VotesPanel
                 side={"For"}
                 percentage={calcPercentage(proposal.for_votes)}
+                voteCount={proposal.for_votes}
                 color={"#04D394"}
                 tweets={currentTweets.pro || []}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} style={{position: 'relative', top: '-2vh'}}>
               <div style={{position:"sticky", top:20}}>
                 <Paper
                   className={classes.paper}
@@ -73,7 +75,7 @@ const Home = () => {
                   <Paper
                     className={classes.paper}
                     elevation={3}
-                    style={{marginTop: "20px"}}
+                    style={{marginTop: "20px",}}
                   >
                     <div style={{height:"100%", textAlign: "left", padding: "1em"}}>
                       <h3>Details</h3>
@@ -93,6 +95,7 @@ const Home = () => {
               <VotesPanel
                 side={"Against"}
                 percentage={calcPercentage(proposal.against_votes)}
+                voteCount={proposal.against_votes}
                 color={"#DE5F67"}
                 tweets={currentTweets.neg || []}
               />

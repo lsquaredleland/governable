@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReactGA from 'react-ga';
 
 import {
- BrowserRouter as Router,
+ HashRouter as Router,
  Switch,
  Route,
  Link,
@@ -27,19 +27,28 @@ const App = () => {
   const [tweets, setTweets] = useState([])
   const [voters, setVoters] = useState([])
   const [proposals, setProposals] = useState([])
-  const [currentProposal, setCurrentProposal] = useState(1)
+  const [currentProposal, setCurrentProposal] = useState()
   const [modal, setModal] = useState(undefined);
+  const [initialLoad, setInitiateLoad] = useState(false)
 
   ReactGA.initialize('UA-169309883-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
 
   // Gets individual voter data for each proposal
-  const UpdateVoters = id => {
-    fetch(`https://api.compound.finance/api/v2/governance/proposal_vote_receipts?proposal_id=${id}&page_size=100`)
+  // Should this be a reducer instead?
+  useEffect(() => {
+    if (initialLoad === false) return;
+
+    if (!Number.isInteger(currentProposal)) {
+      setCurrentProposal(proposals.length);
+      return;
+    }
+
+
+    fetch(`https://api.compound.finance/api/v2/governance/proposal_vote_receipts?proposal_id=${currentProposal}&page_size=100`)
       .then(res => res.json())
       .then(
         (result) => {
-          setCurrentProposal(id)
           const votes = result.proposal_vote_receipts.map(v => {
             const { support, votes, voter: { address, display_name, image_url } } = v
             return {
@@ -57,7 +66,7 @@ const App = () => {
           console.log(error);
         }
       );
-  }
+  }, [currentProposal, initialLoad]);
 
   useEffect(() => {
     setTweets(allTweets)
@@ -67,13 +76,12 @@ const App = () => {
       .then(
         (result) => {
           setProposals(result.proposals);
-          UpdateVoters(result.proposals.length);
+          setInitiateLoad(true);
         },
         (error) => {
           console.log(error);
         }
       );
-      UpdateVoters(1);
   }, [])
 
   return (
@@ -94,7 +102,6 @@ const App = () => {
               currentProposal,
               setCurrentProposal,
               voters,
-              UpdateVoters,
               modal, setModal
             }}>
               <div className="App">
@@ -117,8 +124,7 @@ const CompoundProposals = ({ currentProposal }) => {
         <Home />
       </Route>
       <Route exact path={match.path}>
-        <Home />
-        // <Redirect to={`/Compound/${currentProposal}`} />
+        <Redirect to={`/Compound/${currentProposal}`} />
       </Route>
     </Switch>
   );

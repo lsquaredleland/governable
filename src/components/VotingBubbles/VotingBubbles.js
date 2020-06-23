@@ -4,6 +4,7 @@ import { AppContext } from '../../App';
 import { ResponsiveBubble } from '@nivo/circle-packing';
 
 import TokenIcon from '../TokenIcon';
+import { numFormat } from '../../utils';
 
 
 // https://observablehq.com/@d3/clustered-bubbles
@@ -62,7 +63,7 @@ const VotingBubbles = ({ voters }) => {
             if (!isChild) {
               percentage = e.value / (totalForVotes + totalNegVotes) * 100;
             }
-            const value = e.value.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            const value = numFormat(e.value);
             return (
               <div style={{display:"inline-flex"}}>
                 {isChild ? <TokenIcon

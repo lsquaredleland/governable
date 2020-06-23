@@ -13,7 +13,7 @@ const classes = {
   }
 };
 
-const VotesPanel = ({ tweets, side, percentage, color }) => {
+const VotesPanel = ({ tweets, side, percentage, voteCount, color }) => {
 
   return (
     <>
@@ -24,6 +24,7 @@ const VotesPanel = ({ tweets, side, percentage, color }) => {
           <VoterTable
             side={side}
             percentage={percentage}
+            voteCount={voteCount}
             color={color}
           />
         </Paper>

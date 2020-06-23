@@ -38,7 +38,7 @@ const Hero = ({ proposal }) => {
   const { id, title } = proposal;
 
   // Add navigation arrows here...
-  const { UpdateVoters, proposals } = useContext(AppContext);
+  const { setCurrentProposal, proposals } = useContext(AppContext);
 
   return (
     <StyledHero id="hero">
@@ -59,7 +59,7 @@ const Hero = ({ proposal }) => {
               {id > 1 ?
                 <IconButton
                   style={{float: "left", height: "20px"}}
-                  onClick={() => id > 1 ? UpdateVoters(id-1) : null}
+                  onClick={() => id > 1 ? setCurrentProposal(id-1) : null}
                 >
                   <ArrowBackIcon
                     style={{
@@ -82,7 +82,7 @@ const Hero = ({ proposal }) => {
               {id < proposals.length ?
                 <IconButton
                   style={{float: "right", height: "20px"}}
-                  onClick={() => id < proposals.length ? UpdateVoters(id+1) : null}
+                  onClick={() => id < proposals.length ? setCurrentProposal(id+1) : null}
                 >
                   <ArrowForwardIcon
                     style={{
