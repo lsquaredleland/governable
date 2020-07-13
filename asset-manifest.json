@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.5f361e03.chunk.css",
-    "main.js": "/static/js/main.c00ed573.chunk.js",
-    "main.js.map": "/static/js/main.c00ed573.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.fe6066d2.js",
-    "runtime-main.js.map": "/static/js/runtime-main.fe6066d2.js.map",
-    "static/js/2.013fc838.chunk.js": "/static/js/2.013fc838.chunk.js",
-    "static/js/2.013fc838.chunk.js.map": "/static/js/2.013fc838.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.96ffae8abedf02f4ac3d91b1f8c303b5.js": "/precache-manifest.96ffae8abedf02f4ac3d91b1f8c303b5.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.5f361e03.chunk.css.map": "/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.013fc838.chunk.js.LICENSE.txt": "/static/js/2.013fc838.chunk.js.LICENSE.txt",
-    "static/media/ABOUT.md": "/static/media/ABOUT.2616be68.md",
-    "static/media/logo.svg": "/static/media/logo.5d5d9eef.svg"
+    "main.css": "/governable/static/css/main.5f361e03.chunk.css",
+    "main.js": "/governable/static/js/main.00a71351.chunk.js",
+    "main.js.map": "/governable/static/js/main.00a71351.chunk.js.map",
+    "runtime-main.js": "/governable/static/js/runtime-main.7f089328.js",
+    "runtime-main.js.map": "/governable/static/js/runtime-main.7f089328.js.map",
+    "static/js/2.0593b1eb.chunk.js": "/governable/static/js/2.0593b1eb.chunk.js",
+    "static/js/2.0593b1eb.chunk.js.map": "/governable/static/js/2.0593b1eb.chunk.js.map",
+    "index.html": "/governable/index.html",
+    "precache-manifest.6c4f9b65b327bff54ff6668a87163964.js": "/governable/precache-manifest.6c4f9b65b327bff54ff6668a87163964.js",
+    "service-worker.js": "/governable/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/governable/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.0593b1eb.chunk.js.LICENSE.txt": "/governable/static/js/2.0593b1eb.chunk.js.LICENSE.txt",
+    "static/media/ABOUT.md": "/governable/static/media/ABOUT.2616be68.md",
+    "static/media/logo.svg": "/governable/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.fe6066d2.js",
-    "static/js/2.013fc838.chunk.js",
+    "static/js/runtime-main.7f089328.js",
+    "static/js/2.0593b1eb.chunk.js",
     "static/css/main.5f361e03.chunk.css",
-    "static/js/main.c00ed573.chunk.js"
+    "static/js/main.00a71351.chunk.js"
   ]
 }
