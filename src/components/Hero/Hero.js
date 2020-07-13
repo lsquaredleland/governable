@@ -37,7 +37,6 @@ const StyledWrapper = styled.div`
 const Hero = ({ proposal }) => {
   const { id, title } = proposal;
 
-  // Add navigation arrows here...
   const { setCurrentProposal, proposals } = useContext(AppContext);
 
   return (

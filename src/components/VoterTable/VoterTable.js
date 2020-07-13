@@ -53,7 +53,7 @@ const VoterTable = ({ side, percentage, voteCount, color }) => {
           <Box
             style={{margin: "0 auto", fontWeight: 500}}
             onClick={showMore}
-          >Show More</Box>
+          >Show More ({orderedVotes.length - itemsToShow})</Box>
         </Row>
       : ''}
     </>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 
 import { AppContext } from '../../App'
 import VotingBubbles from '../../components/VotingBubbles'
@@ -24,7 +24,6 @@ const classes = makeStyles(theme => ({
 
 const MainPanel = ({ proposal, smallScreen }) => {
   const { voters } = useContext(AppContext);
-  const [showDescription, setShowDescription] = useState(false);
 
   return (
     <div style={{position:"sticky", top:20, marginTop: '-20px'}}>
