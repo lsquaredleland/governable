@@ -12,7 +12,7 @@ const StyledHero = styled.div`
   background: #000;
   display: flex;
   margin-top: -80px;
-  min-height: calc(50vh - 80px);
+  min-height: calc(40vh - 80px);
   position: relative;
   touch-action: none;
 `
@@ -45,15 +45,15 @@ const Hero = ({ proposal }) => {
       <StyledWrapper>
         <StyledContent>
             <div style={{ textAlign: 'center' }}>
-              <h2 style={{
+              <h1 style={{
                 margin: 0,
                 padding: 0,
-                fontSize: '2vmax',
+                // fontSize: '2vmax',
                 fontWeight: 500,
                 textShadow: '0px 4px 4px black',
               }} >
                 Compound Divided
-              </h2>
+              </h1>
             </div>
             <div style={{ display: 'flex' }}>
               {id > 1 ?
@@ -69,16 +69,16 @@ const Hero = ({ proposal }) => {
                   />
                 </IconButton> : null
               }
-              <h2 style={{
+              <h3 style={{
                 margin: 0,
                 padding: 0,
-                fontSize: '1vmax',
+                // fontSize: '1vmax',
                 fontWeight: 500,
                 textShadow: '0px 4px 4px black',
                 display: 'flex',
               }}>
                 <div><a style={{color: "grey"}}>{('00' + id).slice(-3)}</a>  {title}</div>
-              </h2>
+              </h3>
               {id < proposals.length ?
                 <IconButton
                   style={{float: "right", height: "20px"}}

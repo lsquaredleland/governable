@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { AppContext } from '../../App';
 import { ResponsiveBubble } from '@nivo/circle-packing';
 
 import TokenIcon from '../TokenIcon';

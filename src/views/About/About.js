@@ -33,7 +33,7 @@ const About = () => {
 
   return (
     <Container>
-      <Grid item xs={5}>
+      <Grid item xs={12} style={{maxWidth: '650px'}}>
         <Paper elevation={3} style={classes.paper}>
           <article dangerouslySetInnerHTML={{__html: markdown}} />
         </Paper>

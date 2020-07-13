@@ -1,19 +1,19 @@
 import React, { useContext, useEffect } from 'react'
 
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { AppContext } from '../../App'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from "@material-ui/core/Paper"
 import { makeStyles } from '@material-ui/core/styles'
-import Showdown from 'showdown'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Container from '../../components/Container'
 import Hero from '../../components/Hero'
 import VotesPanel from '../../components/VotesPanel'
-import VotingBubbles from '../../components/VotingBubbles'
 import TableModal from '../../components/TableModal'
+import MainPanel from '../../components/MainPanel'
 
 
 const classes = makeStyles(theme => ({
@@ -21,6 +21,10 @@ const classes = makeStyles(theme => ({
     padding: 20,
     textAlign: "center",
     fontFamily: "Roboto",
+  },
+  mainGraph: {
+    position: 'relative',
+    top: '-2vh',
   }
 }));
 
@@ -30,7 +34,7 @@ const Home = () => {
   let { proposalNum } = useParams();
 
   useEffect(() => {
-    if (Number.isInteger(parseInt(proposalNum)) && proposalNum != currentProposal) {
+    if (Number.isInteger(parseInt(proposalNum)) && proposalNum !== currentProposal) {
       setCurrentProposal(parseInt(proposalNum));
     }
   }, [proposalNum])
@@ -42,7 +46,9 @@ const Home = () => {
     return (parseFloat(input) / (parseFloat(proposal.for_votes) + parseFloat(proposal.against_votes)) * 100).toFixed(2);
   };
 
-  const converter = new Showdown.Converter();
+  // Make this a hook instead?
+  const smallScreen = !useMediaQuery('(min-width:1280px)');
+  const mobileView = !useMediaQuery('(min-width:600px)'); // This has to match xs, sm, etc...
 
   return (
     <>
@@ -54,49 +60,27 @@ const Home = () => {
           position: 'relative',
         }}>
           <Grid container spacing={3}>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} lg={3}>
               <VotesPanel
                 side={"For"}
                 percentage={calcPercentage(proposal.for_votes)}
                 voteCount={proposal.for_votes}
                 color={"#04D394"}
+                mobileView={mobileView}
                 tweets={currentTweets.pro || []}
               />
             </Grid>
-            <Grid item xs={6} style={{position: 'relative', top: '-2vh'}}>
-              <div style={{position:"sticky", top:20}}>
-                <Paper
-                  className={classes.paper}
-                  elevation={3}
-                >
-                  {voters.length > 0 ? <VotingBubbles voters={voters} /> : null}
-                </Paper>
-                <Grid item xs={7}>
-                  <Paper
-                    className={classes.paper}
-                    elevation={3}
-                    style={{marginTop: "20px",}}
-                  >
-                    <div style={{height:"100%", textAlign: "left", padding: "1em"}}>
-                      <h3>Details</h3>
-                      {proposal.description && proposal.description.split("\n\n").map((p, i) => {
-                        // Hacky
-                        const html = converter.makeHtml(p).replace("<img","<img style='width:100%'");
-                        return (
-                          <p dangerouslySetInnerHTML={{__html:html}} key={i} />
-                        )
-                      })}
-                    </div>
-                  </Paper>
-                </Grid>
-              </div>
+            {/* useMediaQuery for order... */}
+            <Grid item xs={12} lg={6} style={classes.mainGraph} style={{order: smallScreen ? '-1' : null}}>
+              <MainPanel proposal={proposal} smallScreen={smallScreen} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} lg={3}>
               <VotesPanel
                 side={"Against"}
                 percentage={calcPercentage(proposal.against_votes)}
                 voteCount={proposal.against_votes}
                 color={"#DE5F67"}
+                mobileView={mobileView}
                 tweets={currentTweets.neg || []}
               />
             </Grid>

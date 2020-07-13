@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 
 import { AppContext } from '../../App'
+import { numFormat } from '../../utils';
 
 import Modal from '@material-ui/core/Modal';
 import Table from '@material-ui/core/Table';
@@ -10,9 +11,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
-
 
 const useTableStyles = makeStyles(theme => ({
   table: {
@@ -32,7 +32,7 @@ const useTableStyles = makeStyles(theme => ({
 
 const TableModal = () => {
   const { modal, setModal, voters } = useContext(AppContext);
-
+  const mobileView = !useMediaQuery('(min-width:600px)');
 
   const open = modal === 'For' || modal === 'Against';
   const handleClose = () => {
@@ -43,7 +43,7 @@ const TableModal = () => {
     .filter(d => modal === "For" ? d.support === true : d.support === false)
     .sort((a, b) => b.votes - a.votes)
 
-  const classes = useTableStyles()
+  const classes = useTableStyles();
 
   return (
     <Modal
@@ -52,7 +52,7 @@ const TableModal = () => {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      <div className={classes.tableContainer}>
+      <div className={classes.tableContainer} style={{margin: mobileView ? '1vh' : null}}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
@@ -75,16 +75,29 @@ const TableModal = () => {
   )
 }
 
+const useCellFormat = makeStyles(theme => ({
+  address: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: '10vh', // percentage seems buggy
+  }
+}))
+
 const Row = ({ row }) => {
   const { address, display_name, votes, time } = row;
-  const votesFormat = votes.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const votesFormat = numFormat(votes);
+
+  const classes = useCellFormat();
 
   return (
     <TableRow key={address}>
-      <TableCell component="th" scope="row">
-        {display_name || address}
+      <TableCell component="th" scope="row" className={classes.address}>
+        {display_name || <a title={address}>{address}</a>}
       </TableCell>
-      <TableCell align="right">{address}</TableCell>
+      <TableCell className={classes.address} align="right">
+        <a title={address}>{address}</a>
+      </TableCell>
       <TableCell align="right">{votesFormat}</TableCell>
       <TableCell align="right">{time}</TableCell>
     </TableRow>

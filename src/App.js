@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import ReactGA from 'react-ga';
 
 import {
  HashRouter as Router,
  Switch,
  Route,
- Link,
  Redirect,
  useRouteMatch,
- useParams,
 } from "react-router-dom";
 
 import logo from './logo.svg';
@@ -31,9 +28,6 @@ const App = () => {
   const [modal, setModal] = useState(undefined);
   const [initialLoad, setInitiateLoad] = useState(false)
 
-  ReactGA.initialize('UA-169309883-1');
-  ReactGA.pageview(window.location.pathname + window.location.search);
-
   // Gets individual voter data for each proposal
   // Should this be a reducer instead?
   useEffect(() => {
@@ -44,11 +38,12 @@ const App = () => {
       return;
     }
 
-
-    fetch(`https://api.compound.finance/api/v2/governance/proposal_vote_receipts?proposal_id=${currentProposal}&page_size=100`)
+    const additional = `?proposal_id=${currentProposal}&page_size=100`;
+    fetch("https://api.compound.finance/api/v2/governance/proposal_vote_receipts"+ additional)
       .then(res => res.json())
       .then(
         (result) => {
+          console.log("result", result)
           const votes = result.proposal_vote_receipts.map(v => {
             const { support, votes, voter: { address, display_name, image_url } } = v
             return {
@@ -71,10 +66,20 @@ const App = () => {
   useEffect(() => {
     setTweets(allTweets)
 
-    fetch("https://api.compound.finance/api/v2/governance/proposals")
+    // Other APIs
+    // > https://api.compound.finance/api/v2/governance/history
+    // => top level network data (# token holders + # voting addresses)
+    // > https://api.compound.finance/api/v2/governance/comp
+    // => comp distribution mechanism data
+    // > https://api.compound.finance/api/v2/governance/accounts?page_size=100
+    // => good for building current delegation tree
+
+    const additional = "?with_detail=true&page_size=100";
+    fetch("https://api.compound.finance/api/v2/governance/proposals" + additional)
       .then(res => res.json())
       .then(
         (result) => {
+          console.log("proposals", result)
           setProposals(result.proposals);
           setInitiateLoad(true);
         },
@@ -82,6 +87,28 @@ const App = () => {
           console.log(error);
         }
       );
+
+    // use new email in gitconfig
+    // Note sometimes people will delegate while having a - 0 balance
+    // Start by getting all the voters ("votes"), then work backwards to get all the delegators ("balance")
+    // If delegating to self => means you're a delegate
+  //   fetch("https://api.compound.finance/api/v2/governance/accounts?page_size=500&order_by=balance&page_number=1")
+  //     .then(res => res.json())
+  //     .then(
+  //       (result) => {
+  //         result.accounts.forEach((item, i) => {
+  //           if (item.delegate.address !== "0x0000000000000000000000000000000000000000" && item.address !== item.delegate.address) {
+  //             const { address, display_name } = item.delegate;
+  //             const delegate_title = display_name === null ? address : display_name;
+  //             console.log(item.address, address, delegate_title, item.balance, Math.log(item.balance))
+  //           }
+  //         });
+  //
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //       }
+  //     );
   }, [])
 
   return (
@@ -113,7 +140,7 @@ const App = () => {
       </Router>
     </>
   );
-};
+}
 
 const CompoundProposals = ({ currentProposal }) => {
   let match = useRouteMatch();

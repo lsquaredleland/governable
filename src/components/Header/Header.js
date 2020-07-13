@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   Link,
-  Router,
-  useLocation,
 } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Container from '../Container';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import IconButton from '@material-ui/core/IconButton';
 
 
@@ -46,8 +45,9 @@ const StyledNav = styled.nav`
 `
 
 const Header = () => {
-  // const location = useLocation()
   const githubUrl = "https://github.com/lsquaredleland/governable";
+  const twitterUrl = "https://twitter.com/compcabal";
+
   return (
     <StyledWrapper transparent={false}>
       <Container>
@@ -75,7 +75,10 @@ const Header = () => {
             <StyledLink to="/Compound">Compound</StyledLink>
             <StyledLink to="/about">About</StyledLink>
             <IconButton onClick={() => window.open(githubUrl, '_blank')}>
-              <GitHubIcon style={{color:"white"}}/>
+              <GitHubIcon style={{color:"white"}} />
+            </IconButton>
+            <IconButton onClick={() => window.open(twitterUrl, '_blank')}>
+              <TwitterIcon style={{color:"white"}} />
             </IconButton>
           </StyledNav>
         </StyledHeader>

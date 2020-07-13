@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 
-import { AppContext } from '../../App'
+import { AppContext } from '../../App';
 
-import Box from '@material-ui/core/Box'
-import { makeStyles } from '@material-ui/core/styles'
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
 
-import TokenIcon from '../TokenIcon'
+import TokenIcon from '../TokenIcon';
 import { numFormat } from '../../utils';
 
 const VoterTable = ({ side, percentage, voteCount, color }) => {
