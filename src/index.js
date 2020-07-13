@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 ReactDOM.render(
   <React.StrictMode>
+    <meta name="ui-version" content="%REACT_APP_GIT_SHA%" />
     <App />
   </React.StrictMode>,
   document.getElementById('root')

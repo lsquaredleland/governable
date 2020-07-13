@@ -81,6 +81,14 @@ const useCellFormat = makeStyles(theme => ({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     maxWidth: '10vh', // percentage seems buggy
+
+    // Alternative to html title
+    '&:hover': {
+      width: 'auto',
+      whiteSpace: 'normal',
+      wordBreak: 'break-word',
+      zIndex: 5,
+    }
   }
 }))
 
@@ -96,7 +104,7 @@ const Row = ({ row }) => {
         {display_name || <a title={address}>{address}</a>}
       </TableCell>
       <TableCell className={classes.address} align="right">
-        <a title={address}>{address}</a>
+        {address}
       </TableCell>
       <TableCell align="right">{votesFormat}</TableCell>
       <TableCell align="right">{time}</TableCell>
@@ -104,4 +112,4 @@ const Row = ({ row }) => {
   )
 }
 
-export default TableModal
+export default TableModal;

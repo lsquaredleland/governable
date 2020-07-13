@@ -36,6 +36,7 @@ const About = () => {
       <Grid item xs={12} style={{maxWidth: '650px'}}>
         <Paper elevation={3} style={classes.paper}>
           <article dangerouslySetInnerHTML={{__html: markdown}} />
+          <p>Hash: {process.env.REACT_APP_GIT_SHA}</p>
         </Paper>
       </Grid>
     </Container>

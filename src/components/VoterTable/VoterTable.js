@@ -29,7 +29,7 @@ const VoterTable = ({ side, percentage, voteCount, color }) => {
         />
       </HeaderRow>
       <Row key={"Header"}>
-        <TokenCell
+        <NameCell
           name={"Address"}
         />
         <AmountCell amount={"Votes"} />
@@ -39,7 +39,7 @@ const VoterTable = ({ side, percentage, voteCount, color }) => {
         const name = voter.display_name ? voter.display_name : voter.address.slice(0, 10)
         return (
           <Row key={voter.address}>
-            <TokenCell
+            <NameCell
               name={name}
               tokenIcon={<TokenIcon src={voter.image_url} alt={name} />}
             />
@@ -133,9 +133,10 @@ const Row = ({ children }) => {
   )
 }
 
-const useTokenCellStyles = makeStyles(theme => ({
+const useNameCellStyles = makeStyles(theme => ({
   name: {
     marginLeft: theme.spacing(2),
+    textAlign: 'left',
   },
   tokenCell: {
     alignItems: 'center',
@@ -143,8 +144,8 @@ const useTokenCellStyles = makeStyles(theme => ({
     flex: 1,
   },
 }))
-const TokenCell = ({ name, tokenIcon }) => {
-  const classes = useTokenCellStyles()
+const NameCell = ({ name, tokenIcon }) => {
+  const classes = useNameCellStyles()
   return (
     <Box className={classes.tokenCell}>
       {tokenIcon}

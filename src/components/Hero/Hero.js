@@ -12,7 +12,7 @@ const StyledHero = styled.div`
   background: #000;
   display: flex;
   margin-top: -80px;
-  min-height: calc(40vh - 80px);
+  min-height: max(calc(40vh - 80px), 300px);
   position: relative;
   touch-action: none;
 `

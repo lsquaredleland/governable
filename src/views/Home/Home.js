@@ -5,9 +5,9 @@ import { useParams } from "react-router-dom";
 import { AppContext } from '../../App'
 
 import Grid from '@material-ui/core/Grid'
-import Paper from "@material-ui/core/Paper"
 import { makeStyles } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Swipeable } from 'react-swipeable';
 
 import Container from '../../components/Container'
 import Hero from '../../components/Hero'
@@ -29,7 +29,7 @@ const classes = makeStyles(theme => ({
 }));
 
 const Home = () => {
-  const { tweets, proposals, setCurrentProposal, currentProposal, voters } = useContext(AppContext);
+  const { tweets, proposals, setCurrentProposal, currentProposal } = useContext(AppContext);
 
   let { proposalNum } = useParams();
 
@@ -49,6 +49,17 @@ const Home = () => {
   // Make this a hook instead?
   const smallScreen = !useMediaQuery('(min-width:1280px)');
   const mobileView = !useMediaQuery('(min-width:600px)'); // This has to match xs, sm, etc...
+
+  // http://stack.formidable.com/react-swipeable/
+  // Add some styling + animation later
+  const swipeRight = () => currentProposal > 1 ? setCurrentProposal(currentProposal-1) : null;
+  const swipeLeft = () => currentProposal < proposals.length ? setCurrentProposal(currentProposal + 1) : null;
+  const config = {
+    delta: 10,
+    preventDefaultTouchmoveEvent: true,
+    trackTouch: true,
+    trackMouse: true,
+  }
 
   return (
     <>
@@ -70,9 +81,14 @@ const Home = () => {
                 tweets={currentTweets.pro || []}
               />
             </Grid>
-            {/* useMediaQuery for order... */}
             <Grid item xs={12} lg={6} style={classes.mainGraph} style={{order: smallScreen ? '-1' : null}}>
-              <MainPanel proposal={proposal} smallScreen={smallScreen} />
+              <Swipeable
+                onSwipedRight={swipeRight}
+                onSwipedLeft={swipeLeft}
+                {...config}
+              >
+                <MainPanel proposal={proposal} smallScreen={smallScreen} />
+              </Swipeable>
             </Grid>
             <Grid item xs={12} sm={6} lg={3}>
               <VotesPanel
@@ -91,4 +107,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
