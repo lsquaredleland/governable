@@ -46,7 +46,7 @@ const StyledNav = styled.nav`
 
 const Header = () => {
   const githubUrl = "https://github.com/lsquaredleland/governable";
-  const twitterUrl = "https://twitter.com/compcabal";
+  const twitterUrl = "https://twitter.com/lsquaredleland";
 
   return (
     <StyledWrapper transparent={false}>

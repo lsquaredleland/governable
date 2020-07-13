@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* https://stackoverflow.com/questions/48391897/add-git-information-to-create-react-app */}
     <meta name="ui-version" content="%REACT_APP_GIT_SHA%" />
     <App />
   </React.StrictMode>,

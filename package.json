@@ -1,5 +1,5 @@
 {
-  "homepage": "http://lsquaredleland.github.io/governable",
+  "homepage": "https://divided.house",
   "name": "governable",
   "version": "0.1.0",
   "private": true,
@@ -25,8 +25,8 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
