@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { AppContext } from '../../App'
+import { CompoundContext } from '../../App'
 import { numFormat } from '../../utils';
 
 import Modal from '@material-ui/core/Modal';
@@ -31,7 +31,7 @@ const useTableStyles = makeStyles(theme => ({
 
 
 const TableModal = () => {
-  const { modal, setModal, voters } = useContext(AppContext);
+  const { modal, setModal, voters } = useContext(CompoundContext);
   const mobileView = !useMediaQuery('(min-width:600px)');
 
   const open = modal === 'For' || modal === 'Against';

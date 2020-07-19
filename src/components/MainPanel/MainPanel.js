@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { AppContext } from '../../App'
+import { CompoundContext } from '../../App'
 import VotingBubbles from '../../components/VotingBubbles'
 import SmallScreenAccordion from '../../components/SmallScreenAccordion'
 
@@ -23,7 +23,7 @@ const classes = makeStyles(theme => ({
 }));
 
 const MainPanel = ({ proposal, smallScreen }) => {
-  const { voters } = useContext(AppContext);
+  const { voters } = useContext(CompoundContext);
 
   return (
     <div style={{position:"sticky", top:20, marginTop: '-20px'}}>

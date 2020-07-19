@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 
 import { useParams } from "react-router-dom";
 
-import { AppContext } from '../../App'
+import { CompoundContext } from '../../App'
 
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
@@ -14,6 +14,7 @@ import Hero from '../../components/Hero'
 import VotesPanel from '../../components/VotesPanel'
 import TableModal from '../../components/TableModal'
 import MainPanel from '../../components/MainPanel'
+import { allTweets } from '../../tweets';
 
 
 const classes = makeStyles(theme => ({
@@ -29,7 +30,7 @@ const classes = makeStyles(theme => ({
 }));
 
 const Home = () => {
-  const { tweets, proposals, setCurrentProposal, currentProposal } = useContext(AppContext);
+  const { proposals, setCurrentProposal, currentProposal } = useContext(CompoundContext);
 
   let { proposalNum } = useParams();
 
@@ -40,7 +41,7 @@ const Home = () => {
   }, [proposalNum])
 
   const proposal = proposals.find(p => p.id === currentProposal) || {};
-  const currentTweets = tweets.find(t => t.id === currentProposal) || {};
+  const currentTweets = allTweets.find(t => t.id === currentProposal) || {};
 
   const calcPercentage = (input) => {
     return (parseFloat(input) / (parseFloat(proposal.for_votes) + parseFloat(proposal.against_votes)) * 100).toFixed(2);

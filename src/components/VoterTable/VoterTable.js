@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { AppContext } from '../../App';
+import { CompoundContext } from '../../App';
 
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,7 +9,7 @@ import TokenIcon from '../TokenIcon';
 import { numFormat } from '../../utils';
 
 const VoterTable = ({ side, percentage, voteCount, color }) => {
-  const { voters, setModal } = useContext(AppContext)
+  const { voters, setModal } = useContext(CompoundContext)
 
   const orderedVotes = voters
     .filter(d => side === "For" ? d.support === true : d.support === false )

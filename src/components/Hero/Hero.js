@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { AppContext } from '../../App'
+import { CompoundContext } from '../../App'
 
 import styled from 'styled-components'
 import IconButton from '@material-ui/core/IconButton'
@@ -37,7 +37,7 @@ const StyledWrapper = styled.div`
 const Hero = ({ proposal }) => {
   const { id, title } = proposal;
 
-  const { setCurrentProposal, proposals } = useContext(AppContext);
+  const { setCurrentProposal, proposals } = useContext(CompoundContext);
 
   return (
     <StyledHero id="hero">
