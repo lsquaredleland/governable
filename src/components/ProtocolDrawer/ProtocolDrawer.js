@@ -16,6 +16,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import BuildIcon from '@material-ui/icons/Build';
+import LaunchIcon from '@material-ui/icons/Launch';
 
 import { githubUrl, twitterUrl } from '../../common/constants';
 
@@ -35,6 +36,8 @@ const buttonStyle = {
   color: 'white',
   borderRadius: 3,
   border: 0,
+  margin: '12px',
+  fontWeight: 500,
 }
 
 const ProtocolDrawer = () => {
@@ -73,6 +76,7 @@ const ProtocolDrawer = () => {
       >
         {title}
       </StyledLink>
+      <ListItemIcon><LaunchIcon /></ListItemIcon>
     </ListItem>
   )
 
@@ -99,6 +103,8 @@ const ProtocolDrawer = () => {
           <ListItemLink link="Balancer" title="Balancer" disabled />
           <ListItemLink link="Curve" title="Curve" disabled />
           <ListItemLink link="mStable" title="mStable" disabled />
+          <ListItemLink link="bZx" title="bZx" disabled />
+          <ListItemLink link="Synthetix" title="Synthetix" disabled />
         </List>
         <Divider />
         <List>
