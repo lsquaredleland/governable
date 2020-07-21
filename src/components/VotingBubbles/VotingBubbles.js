@@ -3,7 +3,7 @@ import React from 'react';
 import { ResponsiveBubble } from '@nivo/circle-packing';
 
 import TokenIcon from '../TokenIcon';
-import { numFormat } from '../../utils';
+import { numFormat } from '../../common/utils';
 
 
 // https://observablehq.com/@d3/clustered-bubbles

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import { CompoundContext } from '../../App'
-import { numFormat } from '../../utils';
+import { numFormat } from '../../common/utils';
 
 import Modal from '@material-ui/core/Modal';
 import Table from '@material-ui/core/Table';

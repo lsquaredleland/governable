@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
 import TokenIcon from '../TokenIcon';
-import { numFormat } from '../../utils';
+import { numFormat } from '../../common/utils';
 
 const VoterTable = ({ side, percentage, voteCount, color }) => {
   const { voters, setModal } = useContext(CompoundContext)

@@ -45,7 +45,7 @@ const App = () => {
               modal, setModal
             }}>
               <div className="App">
-                <CompoundProposals currentProposal={currentProposal} />
+                <CompoundRouting currentProposal={currentProposal} />
               </div>
             </CompoundContext.Provider>
           </Route>
@@ -55,16 +55,19 @@ const App = () => {
   );
 }
 
-const CompoundProposals = ({ currentProposal }) => {
+const CompoundRouting = ({ currentProposal }) => {
   let match = useRouteMatch();
 
   return (
     <Switch>
-      <Route path={`${match.path}/:proposalNum`}>
+      <Route path={`${match.path}/proposals/:proposalNum`}>
         <Home />
       </Route>
       <Route exact path={match.path}>
-        <Redirect to={`/Compound/${currentProposal}`} />
+        <Redirect to={`/Compound/proposals/${currentProposal}`} />
+      </Route>
+      <Route exact path={`${match.path}/summary`}>
+        <About />
       </Route>
     </Switch>
   );
