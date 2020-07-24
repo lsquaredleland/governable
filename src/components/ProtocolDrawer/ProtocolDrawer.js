@@ -94,7 +94,7 @@ const ProtocolDrawer = () => {
       >
         <List>
           <ListItemLink link="Compound" title="Compound" />
-          <ListItemLink link="yEarnFinance" title="yEarn Finance" disabled />
+          <ListItemLink link="yEarnFinance" title="yEarn Finance" />
           <ListItemLink link="UMA" title="UMA" disabled />
           <ListItemLink link="ZRX" title="ZRX" disabled />
           <ListItemLink link="MakerDAO" title="MakerDAO" disabled />

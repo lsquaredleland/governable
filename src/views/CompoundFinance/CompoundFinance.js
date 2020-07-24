@@ -29,7 +29,7 @@ const classes = makeStyles(theme => ({
   }
 }));
 
-const Home = () => {
+const CompoundFinance = () => {
   const { proposals, setCurrentProposal, currentProposal } = useContext(CompoundContext);
 
   let { proposalNum } = useParams();
@@ -108,4 +108,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default CompoundFinance;
