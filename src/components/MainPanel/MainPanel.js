@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { CompoundContext } from '../../App'
 import VotingBubbles from '../../components/VotingBubbles'
 import SmallScreenAccordion from '../../components/SmallScreenAccordion'
+import { Swipeable } from 'react-swipeable';
 
 import Paper from "@material-ui/core/Paper"
 import Grid from '@material-ui/core/Grid'
@@ -22,18 +23,37 @@ const classes = makeStyles(theme => ({
   }
 }));
 
+
+
 const MainPanel = ({ proposal, smallScreen }) => {
-  const { voters } = useContext(CompoundContext);
+  const { voters,  proposals, setCurrentProposal, currentProposal } = useContext(CompoundContext);
+
+  // http://stack.formidable.com/react-swipeable/
+  // Add some styling + animation later
+  const swipeRight = () => currentProposal > 1 ? setCurrentProposal(currentProposal-1) : null;
+  const swipeLeft = () => currentProposal < proposals.length ? setCurrentProposal(currentProposal + 1) : null;
+  const config = {
+    delta: 10,
+    preventDefaultTouchmoveEvent: true,
+    trackTouch: true,
+    trackMouse: true,
+  }
 
   return (
     <div style={{position:"sticky", top:20, marginTop: '-20px'}}>
-      <Paper
-        className={classes.paper}
-        elevation={3}
-        style={{minWidth: '400px'}}
+      <Swipeable
+        onSwipedRight={swipeRight}
+        onSwipedLeft={swipeLeft}
+        {...config}
       >
-        {voters.length > 0 ? <VotingBubbles voters={voters} /> : null}
-      </Paper>
+        <Paper
+          className={classes.paper}
+          elevation={3}
+          style={{minWidth: '400px'}}
+        >
+          {voters.length > 0 ? <VotingBubbles voters={voters} /> : null}
+        </Paper>
+      </Swipeable>
       {smallScreen ?
         <SmallScreenAccordion title={proposal.title}>
           <ProposalDescription proposal={proposal} />
